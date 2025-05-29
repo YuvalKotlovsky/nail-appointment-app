@@ -9,19 +9,20 @@ const PORT = process.env.PORT || 5001;
 // Middlewares
 app.use(cors());
 app.use(express.json());
+import appointmentRoutes from "./routes/appointments.routes.js";
+app.use("/appointments", appointmentRoutes);
 
-// בדיקת תקשורת ראשונית
+//First communication test
 app.get("/", (req, res) => {
-  res.send("שרת פועל תקין 🎉");
+  res.send("The server work");
 });
-
-// חיבור למסד (כרגע ננסה – זה ייכשל אם אין עדיין URI)
+// Connecting to the database (we'll try this now - it will fail if there is no URI yet)
 mongoose
   .connect(process.env.MONGO_URI)
-  .then(() => console.log("📦 מחובר ל-MongoDB"))
-  .catch((err) => console.error("שגיאה בחיבור למסד:", err));
+  .then(() => console.log("connect to MongoDB"))
+  .catch((err) => console.error("Error connecting to the database:", err));
 
-// הפעלת השרת
+// Starting the server
 app.listen(PORT, () => {
   console.log(`${PORT}`);
 });
